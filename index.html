@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>おきなわ こどもイベント帖</title>
+  <meta name="description" content="沖縄県で子どもと一緒に行けるお祭り・イベントをまとめたサイト">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="hero-kicker">子どもといっしょに おでかけしよう</p>
+      <h1>おきなわ<br>こどもイベント帖</h1>
+      <p class="hero-lead">沖縄県内のお祭り・イルミネーション・体験イベントを、家族向けにまとめています。</p>
+    </div>
+    <svg class="wave" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z"></path>
+    </svg>
+  </header>
+
+  <main class="container">
+    <section class="filters" aria-label="絞り込み">
+      <div class="search">
+        <input id="q" type="search" placeholder="イベント名・会場・市町村で検索" aria-label="キーワード検索">
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">月</span>
+        <div class="chips" id="month-chips"></div>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">エリア</span>
+        <div class="chips" id="area-chips"></div>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">種類</span>
+        <div class="chips" id="tag-chips"></div>
+      </div>
+
+      <div class="filter-row">
+        <label class="toggle"><input type="checkbox" id="free-only"> 無料のみ</label>
+        <label class="toggle"><input type="checkbox" id="show-past"> 終了したイベントも表示</label>
+      </div>
+    </section>
+
+    <p class="result-count" id="count" aria-live="polite"></p>
+    <section class="cards" id="cards"></section>
+
+    <aside class="notice">
+      <h2>ご注意</h2>
+      <ul>
+        <li><span class="badge tentative">予定</span> は例年の傾向や「予定」として出ている情報です。お出かけ前に必ず公式サイトで日程をご確認ください。</li>
+        <li>料金・対象年齢・駐車場などは変わることがあります。各カードの「詳しく見る」から情報元を確認してください。</li>
+      </ul>
+    </aside>
+  </main>
+
+  <footer class="footer">
+    <p>おきなわ こどもイベント帖 ・ 最終更新 <span id="updated">2026年11月11日</span></p>
+  </footer>
+
+  <script src="data/events.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
