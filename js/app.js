@@ -127,6 +127,93 @@
     return c;
   }
 
+  // ---------- map ----------
+  const OKINAWA_CENTER = [26.45, 127.85];
+  let map = null;
+  let markerLayer = null;
+  let view = new URLSearchParams(location.search).get("view") === "map" ? "map" : "list";
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, (c) => (
+      { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+
+  function initMap() {
+    if (map || !window.L) return;
+    map = L.map("map", { scrollWheelZoom: false }).setView(OKINAWA_CENTER, 9);
+    // 国土地理院の地図（出典の表示が利用条件）
+    L.tileLayer("https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png", {
+      maxZoom: 18,
+      attribution: '<a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank" rel="noopener">地理院タイル</a>'
+    }).addTo(map);
+    markerLayer = L.layerGroup().addTo(map);
+  }
+
+  function renderMap(list) {
+    const note = document.getElementById("map-note");
+    if (!window.L) { note.textContent = "地図を読み込めませんでした。通信状況を確認して再読み込みしてください。"; return; }
+    initMap();
+    markerLayer.clearLayers();
+
+    // 同じ会場のイベントは1つのピンにまとめる
+    const groups = new Map();
+    list.filter((ev) => typeof ev.lat === "number" && typeof ev.lng === "number").forEach((ev) => {
+      const key = ev.lat + "," + ev.lng;
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(ev);
+    });
+
+    const points = [];
+    groups.forEach((evs) => {
+      const { lat, lng } = evs[0];
+      points.push([lat, lng]);
+      const allPast = evs.every(isPast);
+      const anyNow = evs.some((ev) => !isPast(ev) && toDate(ev.start) <= today);
+      const cls = allPast ? "is-past" : anyNow ? "is-now" : "";
+      const icon = L.divIcon({
+        className: "pin-icon " + cls,
+        html: `<div class="pin ${cls}"><span>${evs.length > 1 ? evs.length : ""}</span></div>`,
+        iconSize: [34, 34],
+        iconAnchor: [17, 34],
+        popupAnchor: [0, -32]
+      });
+      const items = evs.map((ev) => `
+        <div class="popup-event${isPast(ev) ? " is-past" : ""}">
+          <h4>${esc(ev.title)}${isPast(ev) ? "（終了）" : ""}</h4>
+          <p>📅 ${esc(formatRange(ev))}${ev.status === "tentative" ? "（予定）" : ""}</p>
+          <p>💴 ${esc(ev.price)}</p>
+          <a href="${esc(ev.url)}" target="_blank" rel="noopener noreferrer">詳しく見る（情報元）→</a>
+        </div>`).join("");
+      const gmap = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+      L.marker([lat, lng], { icon, title: evs[0].venue, zIndexOffset: allPast ? -100 : 0 })
+        .bindPopup(`<p class="popup-venue">📍 ${esc(evs[0].city)}・${esc(evs[0].venue)}</p>${items}
+          <a class="popup-gmap" href="${gmap}" target="_blank" rel="noopener">Googleマップで開く</a>`, { maxWidth: 260 })
+        .addTo(markerLayer);
+    });
+
+    const noPlace = list.length - list.filter((ev) => typeof ev.lat === "number").length;
+    note.textContent = (points.length ? "" : "この条件で地図に出せるイベントはありません。") +
+      (noPlace ? `会場が決まっていない・場所を確認中のイベント ${noPlace} 件は地図に表示していません（一覧で見られます）。` : "") +
+      " ピンは会場のおおよその位置です。";
+
+    if (points.length === 1) map.setView(points[0], 13);
+    else if (points.length > 1) map.fitBounds(points, { padding: [40, 40], maxZoom: 13 });
+    else map.setView(OKINAWA_CENTER, 9);
+  }
+
+  function setView(v) {
+    view = v;
+    document.querySelectorAll(".view-btn").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.view === v)));
+    document.getElementById("cards").hidden = v !== "list";
+    document.getElementById("map-wrap").hidden = v !== "map";
+    const url = new URL(location.href);
+    if (v === "map") url.searchParams.set("view", "map"); else url.searchParams.delete("view");
+    history.replaceState(null, "", url);
+    render();
+    if (v === "map" && map) map.invalidateSize();
+  }
+  document.querySelectorAll(".view-btn").forEach((b) => b.addEventListener("click", () => setView(b.dataset.view)));
+
   function render() {
     const q = state.q.toLowerCase();
     const list = events
@@ -146,7 +233,8 @@
       list.forEach((ev) => wrap.appendChild(card(ev)));
     }
     document.getElementById("count").textContent = `${list.length} 件のイベント`;
+    if (view === "map") renderMap(list);
   }
 
-  render();
+  setView(view);
 })();

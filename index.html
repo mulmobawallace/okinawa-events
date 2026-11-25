@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -49,14 +50,27 @@
       </div>
     </section>
 
-    <p class="result-count" id="count" aria-live="polite"></p>
+    <div class="result-bar">
+      <p class="result-count" id="count" aria-live="polite"></p>
+      <div class="view-switch" role="group" aria-label="表示の切り替え">
+        <button type="button" class="view-btn" data-view="list" aria-pressed="true">📋 一覧</button>
+        <button type="button" class="view-btn" data-view="map" aria-pressed="false">🗺️ 地図</button>
+      </div>
+    </div>
+
     <section class="cards" id="cards"></section>
+
+    <section class="map-wrap" id="map-wrap" hidden>
+      <div id="map" class="map" aria-label="イベント会場の地図"></div>
+      <p class="map-note" id="map-note"></p>
+    </section>
 
     <aside class="notice">
       <h2>ご注意</h2>
       <ul>
         <li><span class="badge tentative">予定</span> は例年の傾向や「予定」として出ている情報です。お出かけ前に必ず公式サイトで日程をご確認ください。</li>
         <li>料金・対象年齢・駐車場などは変わることがあります。各カードの「詳しく見る」から情報元を確認してください。</li>
+        <li>地図のピンは会場のおおよその位置です。入口や駐車場の場所は公式情報でご確認ください。</li>
       </ul>
     </aside>
   </main>
@@ -65,6 +79,7 @@
     <p>おきなわ こどもイベント帖 ・ 最終更新 <span id="updated">2026年11月11日</span></p>
   </footer>
 
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="data/events.js"></script>
   <script src="js/app.js"></script>
 </body>

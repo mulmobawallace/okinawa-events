@@ -10,6 +10,8 @@
 //  area      : "北部" | "中部" | "南部" | "那覇" | "離島" | "県内各地"
 //  city      : 市町村
 //  venue     : 会場
+//  lat/lng   : 会場の緯度・経度（地図のピン）。わからなければ書かない（地図に出ないだけで一覧には出る）
+//              国土地理院の住所検索 https://msearch.gsi.go.jp/address-search/AddressSearch?q=住所 などで調べる
 //  price     : "無料" | "有料" | "一部有料" | "要確認"
 //  age       : 対象年齢のメモ（省略可）
 //  tags      : 祭り / イルミネーション / 体験 / 花 / 伝統文化 / 動物 / 花火 / スポーツ / 国際交流
@@ -19,6 +21,7 @@
 window.EVENTS = [
   {
     id: "kodomonokuni-aki-2026",
+    lat: 26.32698, lng: 127.8026,
     title: "沖縄こどもの国 秋の感謝祭 2026",
     start: "2026-11-01", end: "2026-11-30",
     status: "confirmed",
@@ -63,6 +66,7 @@ window.EVENTS = [
   },
   {
     id: "inochi-omatsuri-2026",
+    lat: 26.32698, lng: 127.8026,
     title: "まるっとつながる〜いのちのおまつり",
     start: "2026-11-15", end: "2026-11-15",
     status: "confirmed",
@@ -74,6 +78,7 @@ window.EVENTS = [
   },
   {
     id: "bios-ran-aki-2026",
+    lat: 26.42143, lng: 127.79575,
     title: "らんの花祭り・秋",
     start: "2026-09-12", end: "2026-11-30",
     status: "confirmed",
@@ -85,6 +90,7 @@ window.EVENTS = [
   },
   {
     id: "ashibinaa-winter-2026",
+    lat: 26.15812, lng: 127.65518,
     title: "Winter Elegance 2026-2027",
     start: "2026-11-01", end: "2027-02-14",
     status: "confirmed",
@@ -107,6 +113,7 @@ window.EVENTS = [
   },
   {
     id: "southeast-botanical-illumi-2026",
+    lat: 26.37602, lng: 127.80677,
     title: "東南植物楽園 イルミネーション",
     start: "2026-10-23", end: "2027-05-23",
     status: "tentative",
@@ -118,6 +125,7 @@ window.EVENTS = [
   },
   {
     id: "urasoe-xmas-tree-2026",
+    lat: 26.24935, lng: 127.72033,
     title: "ワークショップ「クリスマスツリーを作ろう！」",
     start: "2026-12-12", end: "2026-12-12",
     status: "confirmed",
@@ -130,6 +138,7 @@ window.EVENTS = [
   },
   {
     id: "kodomonokuni-xmas-2026",
+    lat: 26.32698, lng: 127.8026,
     title: "沖縄こどもの国 クリスマスファンタジー",
     start: "2026-12-19", end: "2026-12-31",
     dateText: "例年12月下旬（2025年は12/20〜31）",
@@ -143,6 +152,7 @@ window.EVENTS = [
   },
   {
     id: "shurijo-shinshun-2027",
+    lat: 26.21755, lng: 127.71705,
     title: "首里城公園 新春の宴",
     start: "2027-01-01", end: "2027-01-03",
     dateText: "例年1月1日〜3日",
@@ -167,6 +177,7 @@ window.EVENTS = [
   },
   {
     id: "ran-expo-2027",
+    lat: 26.69378, lng: 127.87837,
     title: "第39回 沖縄国際洋蘭博覧会",
     start: "2027-01-23", end: "2027-01-31",
     dateText: "1月23日〜31日（予定）",
@@ -179,6 +190,7 @@ window.EVENTS = [
   },
   {
     id: "hana-shoku-2027",
+    lat: 26.20296, lng: 127.67518,
     title: "おきなわ花と食のフェスティバル2027",
     start: "2027-01-23", end: "2027-01-31",
     dateText: "1月下旬（予定）",
@@ -191,6 +203,7 @@ window.EVENTS = [
   },
   {
     id: "nakijin-sakura-2027",
+    lat: 26.69105, lng: 127.93018,
     title: "今帰仁グスク桜まつり",
     start: "2027-01-30", end: "2027-02-07",
     status: "confirmed",
@@ -202,6 +215,7 @@ window.EVENTS = [
   },
   {
     id: "nago-sakura-2027",
+    lat: 26.58949, lng: 127.99658,
     title: "名護さくら祭り",
     start: "2027-01-30", end: "2027-01-31",
     dateText: "1月30日・31日（予定）",
@@ -214,6 +228,7 @@ window.EVENTS = [
   },
   {
     id: "kaiensai-2027",
+    lat: 26.28132, lng: 127.73509,
     title: "第24回 琉球海炎祭2027",
     start: "2027-04-10", end: "2027-04-10",
     dateText: "4月の土曜日（予定）",
